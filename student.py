@@ -10,6 +10,9 @@ def studentdataload():
     if os.path.exists('studentdata.json'):
         with open('studentdata.json', 'r') as studentdatafile:
             studentdata = json.load(studentdatafile)
+            if studentdata==[]:
+                print('学生成绩信息库不存在!')
+                return 1
             studentlist = [i['学号'] for i in studentdata]
             return 0
     else:
@@ -78,6 +81,7 @@ def rewritestudentdata():
 
 
 def viewstudentdata():
+    global studentlist
     viewid = int(input('请输入待查看信息所属学生的学号:'))
     data=studentdata[userdatatools.locatedata(studentlist, viewid)]
     for i in ('班级', '学号', '姓名'):

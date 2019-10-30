@@ -32,6 +32,19 @@ def loginin():
     if  os.path.exists('userdata.json'):
         with open('userdata.json', 'r') as userdatafile:
             userdata=json.load(userdatafile)
+        if userdata == []:
+            print('无任何登陆信息,请添加一个超级管理员!')
+            myusernameusername = input('请输入账号:')
+            mypasswordpassword = input('请输入密码:')
+            if mypasswordpassword == input('请再次输入你的密码:'):
+                mypasswordpassword = hashlib.sha256(mypasswordpassword.encode('utf-8')).hexdigest()
+                userdata.append({'username': myusernameusername, 'password': mypasswordpassword, 'gid': 0})
+                writeuserdatafile()
+                GID = 0
+                return True
+            else:
+                sys.stderr.write('2次密码不同，请重试!\n')
+                return False
     else:
         print('无任何登陆信息,请添加一个超级管理员!')
         myusernameusername = input('请输入账号:')
@@ -84,7 +97,7 @@ def useradd():
         sys.stderr.write('用户已存在!\n')
         return 1
     else:
-        gid = int(input('请输入所添加用户的GID: \n0) 超级管理员组\n1) 普通管理员组\n2) 教师\n3) 学生\n:'))
+        gid = int(input('请输入所添加用户的GID: \n1) 普通管理员组\n2) 教师\n3) 学生\n:'))
     if gid <= GID:
         sys.stderr.write('你没有添加此用户的权限，请联系上级成员!\n')
         return 1

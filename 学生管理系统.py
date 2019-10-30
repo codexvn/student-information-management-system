@@ -95,6 +95,7 @@ def loginasadmire():
 if __name__ == "__main__":
     while not userdatatools.loginin():
         pass
+    student.studentdataload()
     if userdatatools.GID <=1:
         loginasadmire()
     elif userdatatools.GID == 2:
