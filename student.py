@@ -90,10 +90,6 @@ def viewstudentdata():
         print('{}:{}'.format(i,data['成绩'][i]))
 
 
-
-
-
-
 def writestudentdatafile():
     """写出成绩信息文件"""
     global studentdata

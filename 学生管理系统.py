@@ -1,3 +1,4 @@
+#默认超级管理员账号为:admin,密码为:admin
 import userdatatools
 import student
 import os
