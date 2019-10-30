@@ -66,6 +66,8 @@ def useradd():
     global GID
     global myusername
     global mypassword
+    icanadd=('普通管理员','老师','学生')
+    print('当前你可以添加的用户类型有:{}'.format('、'.join(icanadd[GID::])))
     if mypassword == input('请输入已登录账号的密码:'):
         username = input('请输入账号:\n')
         password = input('请输入密码:\n')
@@ -128,20 +130,39 @@ def passwordedit ():
     global userdata
     global GID
     global mypassword
+    global myusername
     if mypassword == input('请输入已登录账号的密码:'):
         username = input('请输入要修改的账号:')
         usernamelist = [oneuser['username'] for oneuser in userdata]
         if username not in usernamelist:
             sys.stderr.write('用户不存在!\n')
             return 1
-        if userdata[locatedata(usernamelist, username)]['gid'] <= GID:
+        if userdata[locatedata(usernamelist, username)]['gid'] < GID or (userdata[locatedata(usernamelist, username)]['gid'] == GID and username!=myusername):
             sys.stderr.write('你没有修改此用户的权限，请联系上级成员!\n')
             return 1
-        else:
-            password = input('请输入新密码:')
+        password = input('请输入新密码:')
         if password == input('请确认新密码:'):
             password = hashlib.sha256(password.encode('utf-8')).hexdigest()
             userdata[locatedata(usernamelist, username)]['password'] = password
+            writeuserdatafile()
+            return 0
+        else:
+            sys.stderr.write('2次密码不同，请重试!\n')
+            return 1
+    else:
+        sys.stderr.write('2次密码不同，请重试!\n')
+        return 1
+def mypasswordedit ():
+    """修改我的密码"""
+    global userdata
+    global mypassword
+    global myusername
+    if mypassword == input('请输入已登录账号的密码:'):
+        password = input('请输入新密码:')
+        if password == input('请确认新密码:'):
+            password = hashlib.sha256(password.encode('utf-8')).hexdigest()
+            usernamelist = [oneuser['username'] for oneuser in userdata]
+            userdata[locatedata(usernamelist, myusername)]['password'] = password
             writeuserdatafile()
             return 0
         else:
