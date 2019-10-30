@@ -13,7 +13,7 @@ def loginasstudent():
         print('1)查看学生成绩信息')
         print('2)修改我的密码')
         operand = input()
-        if operand not in ('1','2','exit'):
+        if operand not in [ str(i)  for i in range(1,3)]+['exit']:
             print('请选择正确的操作')
             operand = input()
         elif operand == 'exit':
@@ -36,7 +36,7 @@ def loginasteacher():
         print('7)删除学生账户')
         print('8)修改我的密码')
         operand = input()
-        if operand not in ('1','2','3','4','5','6','7','8','exit'):
+        if operand not in [ str(i)  for i in range(1,9)]+['exit']:
             print('请选择正确的操作')
             operand = input()
         elif operand == 'exit':
@@ -71,7 +71,7 @@ def loginasadmire():
         print('7)删除成员账户')
         print('8)修改我的密码')
         operand = input()
-        if operand not in ('1','2','3','4','5','6','7','8','exit'):
+        if operand not in [ str(i)  for i in range(1,9)]+['exit']:
             print('请选择正确的操作')
             operand = input()
         elif operand == 'exit':
